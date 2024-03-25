@@ -41,6 +41,7 @@ const UserSchema = new mongoose.Schema({
         },
         validate: (password) => (password != 'wrong'),
         // can also be done with middleware, but this is easier
+        // in mongoose set function works before from validate function, thats why we are gonna make validation in set function
     },
     email: {
         type: String,
