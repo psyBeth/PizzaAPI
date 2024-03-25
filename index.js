@@ -1,7 +1,4 @@
 "use strict"
-/* -------------------------------------------------------
-    NODEJS EXPRESS | CLARUSWAY FullStack Team
-------------------------------------------------------- */
 /*
     $ cp .env-sample .env
     $ npm init -y

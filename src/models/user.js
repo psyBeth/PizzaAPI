@@ -1,7 +1,6 @@
 "use strict"
-/* -------------------------------------------------------
-    NODEJS EXPRESS | CLARUSWAY FullStack Team
-------------------------------------------------------- */
+
+/* ------------------------------------------------------- */
 const { mongoose } = require('../configs/dbConnection')
 /* ------------------------------------------------------- */
 //User model:
@@ -26,6 +25,7 @@ const UserSchema = new mongoose.Schema({
         trim: true,
         unique: true,
         required: true,
+        validate: (email) => email.includes("@") && email.includes("."),
     },
     isActive: {
         type: Boolean,
