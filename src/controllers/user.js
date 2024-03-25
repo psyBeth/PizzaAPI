@@ -79,7 +79,7 @@ module.exports = {
         const data = await User.deleteOne({_id: req.params.id});
 
         res.status(data.deletedCount ? 204 : 404).send({
-            error: false,
+            error: !data.deletedCount,
             data
         });
     },
