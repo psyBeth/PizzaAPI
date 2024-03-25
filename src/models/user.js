@@ -19,7 +19,7 @@ const UserSchema = new mongoose.Schema({
         required: true,
         validate: [
             (password) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(password),
-            'Password type is not correct.'
+            'Password type is incorrect.'
         ],
         set: passwordEncrypt,
     },
@@ -28,8 +28,9 @@ const UserSchema = new mongoose.Schema({
         trim: true,
         unique: true,
         required: true,
-        validate: [ (email) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email),
-        'Email format is incorrect.'
+        validate: [ 
+            (email) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email),
+            'Email format is incorrect.'
         ]
     },
     isActive: {
