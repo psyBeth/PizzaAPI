@@ -22,14 +22,25 @@ const UserSchema = new mongoose.Schema({
         //     'Password type is incorrect.'
         // ],
         // set: passwordEncrypt,
+        //? 1ST METHOD
+        // set: (password) => {
+        //     if(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(password)) {
+        //         return passwordEncrypt(password);
+        //     } else {
+        //         res.errorStatusCode = 403;
+        //         throw new Error('Password type is incorrect.');
+        //     }; 
+        // },
+        //? 2ND METHOD
         set: (password) => {
-            if(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(password)) {
-                return passwordEncrypt(password);
+            if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(password)) {
+                return passwordEncrypt(password)
             } else {
-                res.errorStatusCode = 403;
-                throw new Error('Password type is incorrect.');
-            }; 
+                return 'wrong'
+            }
         },
+        validate: (password) => (password != 'wrong'),
+        // can also be done with middleware, but this is easier
     },
     email: {
         type: String,
