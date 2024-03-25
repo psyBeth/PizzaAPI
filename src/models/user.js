@@ -17,11 +17,19 @@ const UserSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: true,
-        validate: [
-            (password) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(password),
-            'Password type is incorrect.'
-        ],
-        set: passwordEncrypt,
+        // validate: [
+        //     (password) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(password),
+        //     'Password type is incorrect.'
+        // ],
+        // set: passwordEncrypt,
+        set: (password) => {
+            if(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(password)) {
+                return passwordEncrypt(password);
+            } else {
+                res.errorStatusCode = 403;
+                throw new Error('Password type is incorrect.');
+            }; 
+        },
     },
     email: {
         type: String,
