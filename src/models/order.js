@@ -35,7 +35,9 @@ const OrderSchema = new mongoose.Schema({
 
     amount: {
         type: Number,
-        required: true
+        // required: true
+        default: function() {return this.quantity * this.price},  // works only in create method 
+        transform: function() {return this.quantity * this.price},   // make it work in update too
     }
 
 }, {
