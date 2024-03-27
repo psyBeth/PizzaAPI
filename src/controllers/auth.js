@@ -112,14 +112,15 @@ module.exports = {
 
             if(refreshData) {
 
-                const user = await User.findOne({_id: refreshData.id})
+                const user = await User.findOne({_id: refreshData.id});
+                // console.log(typeof user);
 
                 if(user && user.password == refreshData.password) {
 
                     res.status(200).send({
                         error: false,
                         bearer: {
-                            access: jwt.sign(user, process.env.ACCESS_KEY, { 'expiresIn' : '30m'})
+                            access: jwt.sign(user.toJSON(), process.env.ACCESS_KEY, { expiresIn: '30m'})
                         }
                     })
 
