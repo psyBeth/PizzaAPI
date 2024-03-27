@@ -47,7 +47,13 @@ module.exports = {
             #swagger.summary = "Get Single User"
         */
 
-        const data = await User.findOne({_id: req.params.id});
+        // allow managa only self-record
+        let filter = {}
+        if(!req.user.isAdmin) {
+            filter = { userId: req.user.id }
+        }
+        
+        const data = await User.findOne({_id: req.params.id, ...filter});
 
         res.status(200).send({
             error: false,
