@@ -97,6 +97,48 @@ module.exports = {
         };
     },
 
+    refresh: async (req, res) => {
+        /*
+            #swagger.tags = ["Authentication"]
+                #swagger.summary = "JWT: Refresh"
+                #swagger.description = 'Refresh token.'
+        */
+        const refreshToken = req.body?.bearer?.refresh;
+
+        if(refreshToken) {
+
+            const refreshData = await jwt.verify(refreshToken, process.env.REFRESH_KEY);
+            // console.log(refreshData);
+
+            if(refreshData) {
+
+                const user = await User.findOne({_id: refreshData.id})
+
+                if(user && user.password == refreshData.password) {
+
+                    res.status(200).send({
+                        error: false,
+                        bearer: {
+                            access: jwt.sign(user, process.env.ACCESS_KEY, { 'expiresIn' : '30m'})
+                        }
+                    })
+
+                } else {
+                    res.errorStatusCode = 401
+                    throw new Error('Wrong username/email or password.')                    
+                }
+
+            } else {
+                res.errorStatusCode = 401
+                throw new Error('Data bearer.refresh is wrong')
+            }
+
+        } else {
+            res.errorStatusCode = 401
+            throw new Error('Please enter token.refresh')
+        }
+    },
+
     logout: async (req, res) => {
         /*
             #swagger.tags = ["Authentication"]
