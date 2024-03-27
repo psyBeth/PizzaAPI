@@ -29,7 +29,7 @@ module.exports = {
         // const data = await res.getModelList(Order, customFilter, ['userId', 'pizzaId'])
         const data = await res.getModelList(Order, customFilter, [
             'userId', 
-            { path: 'pizzaId', populate: {path: 'toppingIds'} }
+            { path: 'pizzaId', populate: {path: 'toppingIds', select: 'name'} }
         ]);
 
         res.status(200).send({
