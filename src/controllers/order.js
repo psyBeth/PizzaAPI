@@ -26,7 +26,11 @@ module.exports = {
             customFilter = { userId: req.user.id }
         }
 
-        const data = await res.getModelList(Order, customFilter, ['userId', 'pizzaId'])
+        // const data = await res.getModelList(Order, customFilter, ['userId', 'pizzaId'])
+        const data = await res.getModelList(Order, customFilter, [
+            'userId', 
+            { path: 'pizzaId', populate: {path: 'toppingIds'} }
+        ]);
 
         res.status(200).send({
             error: false,
