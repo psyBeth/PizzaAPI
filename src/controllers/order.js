@@ -20,11 +20,17 @@ module.exports = {
             `
         */
 
-        const data = await res.getModelList(Order)
+        // Manage only self-record.
+        let customFilter = {}
+        if (!req.user.isAdmin) {
+            customFilter = { userId: req.user.id }
+        }
+
+        const data = await res.getModelList(Order, customFilter, ['userId', 'pizzaId'])
 
         res.status(200).send({
             error: false,
-            details: await res.getModelListDetails(Order),
+            details: await res.getModelListDetails(Order, customFilter),
             data
         })
     },
@@ -51,7 +57,12 @@ module.exports = {
             #swagger.summary = "Get Single Order"
         */
 
-        const data = await Order.findOne({ _id: req.params.id })
+        let customFilter = {}
+        if (!req.user.isAdmin) {
+            customFilter = { userId: req.user.id }
+        }
+
+        const data = await Order.findOne({ _id: req.params.id, ...customFilter }).populate(['userId', 'pizzaId']);
 
         res.status(200).send({
             error: false,
