@@ -46,7 +46,7 @@ module.exports = {
 
                     const accessInfo = {
                         key: process.env.ACCESS_KEY,
-                        time: '30dm',
+                        time: process.env?.ACCESS_EXP || '30m',
                         data: {
                             id: user.id,
                             username: user.username,
@@ -59,7 +59,7 @@ module.exports = {
 
                     const refreshInfo = {
                         key: process.env.REFRESH_KEY,
-                        time: '3d',
+                        time: process.env?.REFRESH_EXP || '3d',
                         data: {
                             id: user.id,  // secure username by showing id instead
                             password: user.password // encrypted password
@@ -120,7 +120,7 @@ module.exports = {
                     res.status(200).send({
                         error: false,
                         bearer: {
-                            access: jwt.sign(user.toJSON(), process.env.ACCESS_KEY, { expiresIn: '30m'})
+                            access: jwt.sign(user.toJSON(), process.env.ACCESS_KEY, { expiresIn: (process.env?.REFRESH_EXP || '30m')})
                         }
                     })
 
