@@ -35,6 +35,9 @@ dbConnection()
 // Accept JSON:
 app.use(express.json())
 
+// Accept Form-Data:
+app.use(express.urlencoded())
+
 // Logger:
 app.use(require('./src/middlewares/logger'))
 
