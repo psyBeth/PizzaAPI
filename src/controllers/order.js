@@ -3,6 +3,7 @@
 
 const Order = require('../models/order');
 const Pizza = require('../models/pizza');
+const nodemailer = require('nodemailer');
 
 module.exports = {
 
@@ -29,8 +30,8 @@ module.exports = {
 
         // const data = await res.getModelList(Order, customFilter, ['userId', 'pizzaId'])
         const data = await res.getModelList(Order, customFilter, [
-            'userId', 
-            { path: 'pizzaId', select: '-__v', populate: {path: 'toppingIds', select: 'name'} }
+            'userId',
+            { path: 'pizzaId', select: '-__v', populate: { path: 'toppingIds', select: 'name' } }
         ]);
 
         res.status(200).send({
@@ -47,14 +48,24 @@ module.exports = {
             #swagger.tags = ["Orders"]
             #swagger.summary = "Create Order"
         */
-       
+
         // get price from the pizza:
         if (!req.body?.price) {
             const pizzaData = await Pizza.findOne({ _id: req.body.pizzaId })
             req.body.price = pizzaData.price
         };
 
-        const data = await Order.create(req.body)
+        const data = await Order.create(req.body);
+
+        /* SendMail */
+        sendMail(
+            data.email,  //to
+            'Wellcome',    //subject
+            `
+                <h1>Hello ${data.username}</h1>
+                <p>Your ordder has been taken.</p>
+            ` //message
+        );
 
         res.status(201).send({
             error: false,

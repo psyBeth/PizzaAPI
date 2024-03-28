@@ -1,6 +1,7 @@
 "use strict"
 
 const User = require('../models/user');
+const sendMail = require('../helpers/sendMail');
 
 module.exports = {
 
@@ -34,6 +35,16 @@ module.exports = {
         */
 
         const data = await User.create(req.body);
+
+        /* SendMail */
+        sendMail(
+            data.email,  //to
+            'Wellcome',    //subject
+            `
+                <h1>Wellcome ${data.username}</h1>
+                <p>Wellcome to our system.</p>
+            ` //message
+        );
 
         res.status(201).send({
             error: false,

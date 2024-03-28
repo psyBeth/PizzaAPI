@@ -51,7 +51,7 @@ app.use(require('./src/middlewares/queryHandler'))
 // https://www.npmjs.com/package/nodemailer
 // https://ethereal.email/
 
-const nodemailer = require('nodemailer');
+// const nodemailer = require('nodemailer');
 
 // Create Test (Fake) account:
 // nodemailer.createTestAccount().then((data) => console.log(data))
@@ -89,23 +89,23 @@ const nodemailer = require('nodemailer');
 //     success ? console.log('SUCCESS', success) : console.log('ERROR', error);
 // })
 
-//* GoogleMail (gmail):
-//* Google -> AccountHome -> Security -> Two-Step-Verify -> App-Passwords
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'betulkoru06@gmail.com',
-        pass: 'mzpf ieyk kylc vaxk', // created an app password 
-    }
-});
-//* SendMail:
-transporter.sendMail({
-    // from: 'betulkoru06@gmail.com',
-    to: 'betulkoru06@gmail.com',
-    subject: 'Hello',
-    text: 'Hello there, how are you doing?',
-    html: '<b>Hello there,</b><p>How are you doing?</p>'
-}, (error, success) => console.log(success, error));
+// //* GoogleMail (gmail):
+// //* Google -> AccountHome -> Security -> Two-Step-Verify -> App-Passwords
+// const transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//         user: 'betulkoru06@gmail.com',
+//         pass: 'mzpf ieyk kylc vaxk', // created an app password 
+//     }
+// });
+// //* SendMail:
+// transporter.sendMail({
+//     // from: 'betulkoru06@gmail.com',
+//     to: 'betulkoru06@gmail.com',
+//     subject: 'Hello',
+//     text: 'Hello there, how are you doing?',
+//     html: '<b>Hello there,</b><p>How are you doing?</p>'
+// }, (error, success) => console.log(success, error));
 
 /* ------------------------------------------------------- */
 // Routes:
