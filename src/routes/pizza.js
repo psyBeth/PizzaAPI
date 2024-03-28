@@ -15,6 +15,12 @@ const upload = multer({
     //dest: './uploads',
     storage: multer.diskStorage({
         destination: './uploads',
+        filename: function(req, file, returnCallback) {
+            // returnCallback(error, 'filename)
+            // returnCallback(null, 'betul.jpg')
+            // console.log(file);
+            returnCallback(null, Date.now() + '-' + file.originalname);
+        }
     }),
 });
 
@@ -27,13 +33,14 @@ router.route('/')
     .get(pizza.list)
     // .post(isAdmin, pizza.create)
     // .post(isAdmin, upload.single('fileInputName'), pizza.create)
-    .post(isAdmin, upload.array('fileInputName'), pizza.create) // recommended.
+    // .post(isAdmin, upload.array('fileInputName'), pizza.create) // recommended.
+    .post(isAdmin, upload.array('images'), pizza.create) 
     // .post(isAdmin, upload.any(), pizza.create) // not recommended.
 
 router.route('/:id')
     .get(pizza.read)
-    .put(isAdmin, upload.array('fileInputName'), pizza.update)
-    .patch(isAdmin, upload.array('fileInputName'), pizza.update)
+    .put(isAdmin, upload.array('images'), pizza.update)
+    .patch(isAdmin, upload.array('images'), pizza.update)
     .delete(isAdmin, pizza.delete)
 
 /* ------------------------------------------------------- */
