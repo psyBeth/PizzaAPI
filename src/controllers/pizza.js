@@ -68,7 +68,13 @@ module.exports = {
         // console.log(req.files); // upload.array()  || upload.any
 
         const pizza = await Pizza.findOne({ _id: req.params.id }, { image: 1 })
-        console.log(pizza)
+        // pizza.images (already existing files)
+        
+        for (let file of req.files) {
+            // pizza.images.push(file.filename)
+            pizza.images.push('/uploads/' + file.filename)
+        };
+        req.body.images = pizza.images;
 
         const data = await Pizza.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
 
