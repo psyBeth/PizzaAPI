@@ -32,8 +32,8 @@ router.route('/')
 
 router.route('/:id')
     .get(pizza.read)
-    .put(isAdmin, pizza.update)
-    .patch(isAdmin, pizza.update)
+    .put(isAdmin, upload.array('fileInputName'), pizza.update)
+    .patch(isAdmin, upload.array('fileInputName'), pizza.update)
     .delete(isAdmin, pizza.delete)
 
 /* ------------------------------------------------------- */
