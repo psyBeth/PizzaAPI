@@ -10,20 +10,21 @@ const { isAdmin } = require('../middlewares/permissions');
 // https://expressjs.com/en/resources/middleware/multer.html
 // multer module ile "form-data" verileri kabul edebiliriz. Yani dosya yükleme yapılabilir.
 
-const multer = require('multer');
-const upload = multer({
-    //dest: './uploads',
-    storage: multer.diskStorage({
-        destination: './uploads',
-        filename: function(req, file, returnCallback) {
-            // returnCallback(error, 'filename)
-            // returnCallback(null, 'betul.jpg')
-            // console.log(file);
-            returnCallback(null, Date.now() + '-' + file.originalname);
-        }
-    }),
-});
+// const multer = require('multer');
+// const upload = multer({
+//     //dest: './uploads',
+//     storage: multer.diskStorage({
+//         destination: './uploads',
+//         filename: function(req, file, returnCallback) {
+//             // returnCallback(error, 'filename)
+//             // returnCallback(null, 'betul.jpg')
+//             // console.log(file);
+//             returnCallback(null, Date.now() + '-' + file.originalname);
+//         }
+//     }),
+// });
 
+const upload = require('../middlewares/upload');
 
 /* ------------------------------------------------------- */
 
